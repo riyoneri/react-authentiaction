@@ -1,6 +1,8 @@
 import { useState, useRef, useContext } from 'react';
 import AuthContext from '../../store/auth-context';
 
+import { useHistory } from 'react-router-dom'
+
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
@@ -9,6 +11,8 @@ const AuthForm = () => {
     isError: false,
     message: ''
   })
+
+  const history = useHistory()
 
   const authCtx = useContext(AuthContext)
 
@@ -55,6 +59,7 @@ const AuthForm = () => {
       }
 
       authCtx.login(data.token)
+      history.replace('/')
 
     } else {
       try {

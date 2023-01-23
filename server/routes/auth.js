@@ -27,8 +27,24 @@ router
     .post("/login", authControllers.postLogin)
 
     .post('/change-password', authProtector.isAuth, [
-        body('password', 'Provide a message')
-        .notEmpty()
+        body('password')
+            .notEmpty()
+            .withMessage('Provide a valid password please!')
+            .custom(async (value, { req }) => {
+                const user = await User.findOne({ _id: req.userId })
+                if (!user) {
+                    throw new Error('Not authenticated')
+                }
+                req.usree = user
+            })
+            .withMessage('Login first')
+            .custom((value, { req }) => {
+                if (req.usree && (value === req.usree.password)) {
+                    throw new Error('New password can not be the same with new one')
+                }
+                return true
+            })
+            .withMessage('Use different password with previous one')
     ],
         authControllers.postChangePassword)
 

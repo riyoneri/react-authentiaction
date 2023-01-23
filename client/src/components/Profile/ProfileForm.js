@@ -1,4 +1,5 @@
 import { useRef, useContext, useState } from 'react'
+import {useHistory} from 'react-router-dom'
 
 import AuthContext from '../../store/auth-context';
 
@@ -7,6 +8,8 @@ import classes from './ProfileForm.module.css';
 const ProfileForm = () => {
   const passwordInputRef = useRef()
   const authCtx = useContext(AuthContext)
+
+  const history = useHistory()
 
   const [errorMessage, setErrorMessage] = useState({
     isError: false,
@@ -34,7 +37,7 @@ const ProfileForm = () => {
         throw new Error(data.message || 'An Error Occured')
       }
 
-      console.log(data)
+      history.replace('/')
 
     } catch (err) {
       setErrorMessage({
@@ -45,12 +48,16 @@ const ProfileForm = () => {
 
   }
 
+  const inputChangeHandler = () => {
+    setErrorMessage({ isError: false })
+  }
+
   return (
     <form className={classes.form}>
 
       <div className={classes.control}>
         <label htmlFor='new-password'>New Password</label>
-        <input type='password' required id='new-password' ref={passwordInputRef} />
+        <input onChange={inputChangeHandler} type='password' required id='new-password' ref={passwordInputRef} />
       </div>
       {errorMessage.isError && <div>
         <label>{errorMessage.message}</label>
