@@ -57,8 +57,8 @@ const AuthForm = () => {
           message: data.message || 'An Error Occured'
         })
       }
-
-      authCtx.login(data.token)
+      const expirationTime = new Date(new Date().getTime() + +data.tokenData.expirationTime)
+      authCtx.login(data.tokenData.token, expirationTime.toISOString())
       history.replace('/')
 
     } else {

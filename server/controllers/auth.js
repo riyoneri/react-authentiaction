@@ -47,14 +47,21 @@ exports.postLogin = (req, res, next) => {
                 throw error
             }
 
+            const tokenExpirationTime = 3600
             const token = jwt.sign({
                 email: user.email,
                 userId: user._id.toString()
             }, process.env.JWT_SECRET, {
-                expiresIn: "1h"
+                expiresIn: tokenExpirationTime
             })
 
-            res.status(200).json({ token, userId: user._id.toString() })
+            res.status(200).json({
+                tokenData: {
+                    token: token,
+                    expirationTime: tokenExpirationTime * 1000
+                },
+                userId: user._id.toString()
+            })
         })
         .catch(err => {
             if (!err.statusCode) {
