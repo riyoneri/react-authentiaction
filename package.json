@@ -1,0 +1,23 @@
+{
+  "name": "react-authentication-with-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "install": "concurrently \"cd client && npm i\" \"cd server && npm i\"",
+    "start": "concurrently \"cd client && npm start\" \"cd server && npm test\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riyoneri/react-authentication.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/riyoneri/react-authentication/issues"
+  },
+  "homepage": "https://github.com/riyoneri/react-authentication#readme",
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
